@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Josh Waits",
+    "image": "",
+    "talent": "Chess",
+    "location": "NYC"
+  },
+  {
+    "id": 2,
+    "name": "Tiger Woods",
+    "image": "",
+    "talent": "Golf",
+    "location": "Florida"
+  },
+  {
+    "id": 3,
+    "name": "Wolfgang Mozard",
+    "image": "",
+    "talent": "Golf",
+    "location": "Vienna"
+  }]
