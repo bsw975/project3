@@ -6,9 +6,9 @@ import "./App.css";
 
 const App = () => (
   <Wrapper>
-    <h1 className="title">Project3</h1>
     <UserHome>
       <div>
+        This content is the p-Tag's content from the UserHome call in App.js 
       </div>
     </UserHome>
   </Wrapper>
