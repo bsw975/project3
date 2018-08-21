@@ -1,6 +1,4 @@
 # project3
-Project Description
-
 "OUR APP NAME" is a social network for junior talent - think LinkedIn meets Disney Kids. It is a powerful online site that can have a big impact on a child's professional success and connect them to their peers. Our website users would create resume-like profiles,  videos, and pictures that allow other site members to learn more about their areas of expertise.
 
 Why This App is Valuable for Kids
