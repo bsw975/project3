@@ -5,11 +5,11 @@ Project Description
 
 Why This App is Valuable for Kids
 
-⦁	It helps them choose a college.
-⦁	It helps them get into their college of choice.
-⦁	It can get them their first internship or entry-level job.
-⦁	It can them with future career success.
-⦁	Rcommendations from teachers, volunteer group leaders, coaches, and other mentors.
-⦁	Job e-mail alerts.
-⦁	Conducting company research.
-⦁	Connecting with other talent.
+*	It helps them choose a college.
+*	It helps them get into their college of choice.
+*	It can get them their first internship or entry-level job.
+*	It can them with future career success.
+*	Rcommendations from teachers, volunteer group leaders, coaches, and other mentors.
+*	Job e-mail alerts.
+*	Conducting company research.
+*	Connecting with other talent.
