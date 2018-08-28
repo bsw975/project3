@@ -102,7 +102,9 @@ router.post('/login', (req, res) => {
         });
 });
 
+// what is 'authenticate'? 'jwt' is the 'strategy to employ', it's passed 'req'. Does it support jwt? Yes. Jacob: is it being used...
 router.get('/me', passport.authenticate('jwt', { session: false }), (req, res) => {
+    console.log("itches." + req.user.id);
     return res.json({
         id: req.user.id,
         name: req.user.name,
