@@ -10,7 +10,6 @@ const validateLoginInput = require('../validation/login');
 const User = require('../models/User');
 
 router.post('/register', function(req, res) {
-
     const { errors, isValid } = validateRegisterInput(req.body);
 
     if(!isValid) {
@@ -19,18 +18,18 @@ router.post('/register', function(req, res) {
     User.findOne({
         email: req.body.email
     }).then(user => {
-        if(user) {
+        if(user) { // deal with a duplicate user
             return res.status(400).json({
                 email: 'Email already exists'
             });
         }
-        else {
+        else { // create a generic avatar
             const avatar = gravatar.url(req.body.email, {
                 s: '200',
                 r: 'pg',
                 d: 'mm'
             });
-            const newUser = new User({
+            const newUser = new User({ // create the user using the avatar
                 name: req.body.name,
                 email: req.body.email,
                 password: req.body.password,
@@ -102,14 +101,32 @@ router.post('/login', (req, res) => {
         });
 });
 
-// what is 'authenticate'? 'jwt' is the 'strategy to employ', it's passed 'req'. Does it support jwt? Yes. Jacob: is it being used...
-router.get('/me', passport.authenticate('jwt', { session: false }), (req, res) => {
-    console.log("itches." + req.user.id);
-    return res.json({
-        id: req.user.id,
-        name: req.user.name,
-        email: req.user.email
-    });
-});
+router.post('/AddFriend', function(req, res) {
+    const { errors, isValid } = validateRegisterInput(req.body);
+    if(!isValid) {
+        return res.status(400).json(errors);
+    }
+    User.findOne({
+        email: req.body.email
+    }).then(user => {
+        if(user) { // user exists, submit request to DB
+            const addFriend = new addFriend({
+                requestor: req.body.userid, //who is making the request
+                requestee: user.id, //response from DB
+                dismissed: false,
+            });
+            return res.status(400).json({
+                reply: 'Friend request submitted'
+            });
+        }
+        
+        else {
+            return res.status(400).json({
+                reply: 'Email not found'
+            });
+        } // end else
+    }); // end then
+}) //end router.post
+
 
 module.exports = router;
