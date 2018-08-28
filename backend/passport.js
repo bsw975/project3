@@ -9,8 +9,11 @@ const opts = {};
 opts.jwtFromRequest = ExtractJWT.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = 'secret';
 
+console.log( "test", opts.jwtFromRequest );
+
 module.exports = passport => {
     passport.use(new JWTStrategy(opts, (jwt_payload, done) => {
+        console.log( "test 123", jwt_payload )
         User.findById(jwt_payload.id)
             .then(user => {
                 if(user) {
@@ -18,6 +21,9 @@ module.exports = passport => {
                 }
                 return done(null, false);
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error(err);
+                return done(err, false)
+            });
     }));
 }
