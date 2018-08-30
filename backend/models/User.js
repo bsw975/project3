@@ -21,7 +21,7 @@ const UserSchema = new Schema({
         type: String
     },
     FriendRequestedBy: [
-        { type: Schema.Types.ObjectId, ref: "Users" }
+        { type: Schema.Types.ObjectId, ref: "users" }
     ],
     Friends: [],
     date: {

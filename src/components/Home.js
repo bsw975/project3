@@ -37,12 +37,12 @@ export default class Home extends Component {
     getRequests = (user) => {
         // const anything = this.props
         // console.log(anything)
-        axios.post("/api/users/FriendRequests",user).then(data => {this.setState({friendRequests: data});console.log(data)
-    })
+        axios.post("/api/users/FriendRequests",user).then(data => {
+            this.setState({friendRequests: data});console.log(data)
+        })
     }
     componentDidMount(){
-        console.log(this.props.state)
-
+        console.log(this.props.state);
     }
 
     render() {

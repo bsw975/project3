@@ -126,10 +126,11 @@ router.post('/AddFriend', function (req, res) { // 'req' is the package of two f
 
 router.post('/FriendRequests', function(req,res){
     console.log("FRIEND REQUESTSSSSS",req.body)
-    const id = req.body.id
+    const id = req.body._id
     User.findById(id)
-    // .populate('FriendRequestedBy')
-    .then(FriendRequests => res.json(FriendRequests))
+        .populate('FriendRequestedBy')
+        .then(FriendRequests => res.json(FriendRequests))
+        .catch(err => res.status(404).json(err));
 })
 
 router.get('/me', passport.authenticate('jwt', { session: false }), (req, res) => {
