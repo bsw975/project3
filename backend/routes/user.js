@@ -9,16 +9,16 @@ const validateLoginInput = require('../validation/login');
 
 const User = require('../models/User');
 
-router.post('/register', function(req, res) {
+router.post('/register', function (req, res) {
     const { errors, isValid } = validateRegisterInput(req.body);
 
-    if(!isValid) {
+    if (!isValid) {
         return res.status(400).json(errors);
     }
     User.findOne({
         email: req.body.email
     }).then(user => {
-        if(user) { // deal with a duplicate user
+        if (user) { // deal with a duplicate user
             return res.status(400).json({
                 email: 'Email already exists'
             });
@@ -35,19 +35,19 @@ router.post('/register', function(req, res) {
                 password: req.body.password,
                 avatar
             });
-            
+
             bcrypt.genSalt(10, (err, salt) => {
-                if(err) console.error('There was an error', err);
+                if (err) console.error('There was an error', err);
                 else {
                     bcrypt.hash(newUser.password, salt, (err, hash) => {
-                        if(err) console.error('There was an error', err);
+                        if (err) console.error('There was an error', err);
                         else {
                             newUser.password = hash;
                             newUser
                                 .save()
                                 .then(user => {
                                     res.json(user)
-                                }); 
+                                });
                         }
                     });
                 }
@@ -60,73 +60,89 @@ router.post('/login', (req, res) => {
 
     const { errors, isValid } = validateLoginInput(req.body);
 
-    if(!isValid) {
+    if (!isValid) {
         return res.status(400).json(errors);
     }
 
     const email = req.body.email;
     const password = req.body.password;
 
-    User.findOne({email})
+    User.findOne({ email })
         .then(user => {
-            if(!user) {
+            if (!user) {
                 errors.email = 'User not found'
                 return res.status(404).json(errors);
             }
             bcrypt.compare(password, user.password)
-                    .then(isMatch => {
-                        if(isMatch) {
-                            const payload = {
-                                id: user.id,
-                                name: user.name,
-                                avatar: user.avatar
+                .then(isMatch => {
+                    if (isMatch) {
+                        const payload = {
+                            id: user.id,
+                            name: user.name,
+                            avatar: user.avatar
+                        }
+                        jwt.sign(payload, 'secret', {
+                            expiresIn: 3600
+                        }, (err, token) => {
+                            if (err) console.error('There is some error in token', err);
+                            else {
+                                res.json({
+                                    success: true,
+                                    token: `Bearer ${token}`
+                                });
                             }
-                            jwt.sign(payload, 'secret', {
-                                expiresIn: 3600
-                            }, (err, token) => {
-                                if(err) console.error('There is some error in token', err);
-                                else {
-                                    res.json({
-                                        success: true,
-                                        token: `Bearer ${token}`
-                                    });
-                                }
-                            });
-                        }
-                        else {
-                            errors.password = 'Incorrect Password';
-                            return res.status(400).json(errors);
-                        }
-                    });
+                        });
+                    }
+                    else {
+                        errors.password = 'Incorrect Password';
+                        return res.status(400).json(errors);
+                    }
+                });
         });
 });
 
-router.post('/AddFriend', function(req, res) {
-    const { errors, isValid } = validateRegisterInput(req.body);
-    if(!isValid) {
-        return res.status(400).json(errors);
-    }
-    User.findOne({
-        email: req.body.email
-    }).then(user => {
-        if(user) { // user exists, submit request to DB
-            const addFriend = new addFriend({
-                requestor: req.body.userid, //who is making the request
-                requestee: user.id, //response from DB
-                dismissed: false,
-            });
-            return res.status(400).json({
-                reply: 'Friend request submitted'
-            });
+router.post('/AddFriend', function (req, res) { // 'req' is the package of two friends 
+    User.findOneAndUpdate(
+        { // find user to be friended, by email address
+            email: req.body.requestee
+        }, {
+            $push: {
+                FriendRequestedBy: req.body.requestor.id
+            }
+        } // TODO now this an object
+    )
+    .then(user => {
+        if (user) { // user exists, submit request to DB
+            return res.end()
         }
-        
-        else {
-            return res.status(400).json({
+        else { // user not found, inform requestor
+            return res.status(404).json({
                 reply: 'Email not found'
             });
         } // end else
-    }); // end then
+    }) // end then
+    .catch(err => res.status(422).json(err))
 }) //end router.post
+
+router.post('/FriendRequests', function(req,res){
+    console.log("FRIEND REQUESTSSSSS",req.body)
+    const id = req.body.id
+    User.findById(id)
+    // .populate('FriendRequestedBy')
+    .then(FriendRequests => res.json(FriendRequests))
+})
+
+router.get('/me', passport.authenticate('jwt', { session: false }), (req, res) => {
+    console.log("itches." + req.user.id);
+    return res.json(req.user
+    //     {
+    //     id: req.user.id,
+    //     name: req.user.name,
+    //     email: req.user.email,
+    //     FriendRequestedBy: []
+    // }
+);
+});
 
 
 module.exports = router;

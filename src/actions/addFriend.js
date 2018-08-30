@@ -3,8 +3,8 @@
 import axios from 'axios';
 import { GET_ERRORS, SET_CURRENT_USER } from './types';
 
-export const addFriend = (user, history) => dispatch => {
-    axios.post('/api/users/addfriend', user)
+export const addFriend = (friendsToBe) => dispatch => {
+    axios.post('/AddFriend', friendsToBe)
             .then(res => console.log(/* not sure*/))
             .catch(err => {
                 dispatch({
