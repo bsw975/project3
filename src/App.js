@@ -8,7 +8,6 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authentication';
 import axios from "axios";
-
 import Navbar from './components/Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
@@ -16,13 +15,14 @@ import Home from './components/Home';
 import Profile from './components/Profile';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Slideshow from './components/Slideshow';
 
 class App extends Component {
   state = {
     user: null
   }
 
-  componentDidMount () {
+  componentWillMount () {
     if(localStorage.jwtToken) {
       setAuthToken(localStorage.jwtToken);
       const decoded = jwt_decode(localStorage.jwtToken);
@@ -46,7 +46,9 @@ class App extends Component {
         <Router>
             <div>
               <Navbar />
-                <Route exact path="/" component={ Home } />
+              {this.state.user==null ? <Route exact path="/" component={Slideshow}/>: <Route exact path="/" render = {(props) => <Home state={this.state}/>} />}
+              {console.log(this.state.user)}
+                {/* <Route exact path="/" render = {(props) => <Home state={this.state}/>} /> */}
                 <div className="container">
                   <Route exact path="/register" component={ Register } />
                   <Route exact path="/login" component={ Login } />

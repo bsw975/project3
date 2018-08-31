@@ -60,9 +60,9 @@ class Register extends Component {
         const { errors } = this.state;
         return(
         <div className="container" style={{ marginTop: '50px', width: '700px'}}>
-            <h2 style={{marginBottom: '40px'}}>Registration</h2>
+            <h2 style={{marginBottom: '40px'}}>Welcome! - Sign Up Here</h2>
             <form onSubmit={ this.handleSubmit }>
-                <div className="form-group">
+                <div className="form-group"> {/****** NAME ******/}
                     <input
                     type="text"
                     placeholder="Name"
@@ -75,7 +75,7 @@ class Register extends Component {
                     />
                     {errors.name && (<div className="invalid-feedback">{errors.name}</div>)}
                 </div>
-                <div className="form-group">
+                <div className="form-group"> {/****** Email ******/}
                     <input
                     type="email"
                     placeholder="Email"
@@ -88,7 +88,7 @@ class Register extends Component {
                     />
                     {errors.email && (<div className="invalid-feedback">{errors.email}</div>)}
                 </div>
-                <div className="form-group">
+                <div className="form-group"> {/****** Password ******/}
                     <input
                     type="password"
                     placeholder="Password"
@@ -116,7 +116,7 @@ class Register extends Component {
                 </div>
                 <div className="form-group">
                     <button type="submit" className="btn btn-primary">
-                        Register User
+                        Sign Up
                     </button>
                 </div>
             </form>

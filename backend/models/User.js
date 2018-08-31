@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
+// const FriendRequestedBySchema = new Schema({ FriendRequestedBy: String });
+// const FriendsSchema = new Schema({ Friends: String });
 
 const UserSchema = new Schema({
     name: {
@@ -18,6 +20,12 @@ const UserSchema = new Schema({
     avatar: {
         type: String
     },
+    FriendRequestedBy: [
+        { type: Schema.Types.ObjectId, ref: "users" }
+    ],
+    Friends: [
+        { type: Schema.Types.ObjectId, ref: "users" }
+    ],
     date: {
         type: Date,
         default: Date.now
