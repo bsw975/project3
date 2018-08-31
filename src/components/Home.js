@@ -1,5 +1,3 @@
-// Home.js
-
 import React, { Component } from 'react';
 // import { addFriend } from '../actions/addFriend';
 import axios from 'axios';

@@ -15,6 +15,7 @@ import Home from './components/Home';
 import Profile from './components/Profile';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Slideshow from './components/Slideshow';
 
 class App extends Component {
   state = {
@@ -45,7 +46,7 @@ class App extends Component {
         <Router>
             <div>
               <Navbar />
-              {this.state.user==null ? null: <Route exact path="/" render = {(props) => <Home state={this.state}/>} />}
+              {this.state.user==null ? <Route exact path="/" component={Slideshow}/>: <Route exact path="/" render = {(props) => <Home state={this.state}/>} />}
               {console.log(this.state.user)}
                 {/* <Route exact path="/" render = {(props) => <Home state={this.state}/>} /> */}
                 
