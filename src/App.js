@@ -45,7 +45,6 @@ class App extends Component {
         <Router>
             <div>
               <Navbar />
-              {console.log(this.state)}
                 <Route exact path="/" render = {(props) => <Home state={this.state}/>} />
                 
                 <div className="container">
