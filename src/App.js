@@ -49,7 +49,6 @@ class App extends Component {
               {this.state.user==null ? <Route exact path="/" component={Slideshow}/>: <Route exact path="/" render = {(props) => <Home state={this.state}/>} />}
               {console.log(this.state.user)}
                 {/* <Route exact path="/" render = {(props) => <Home state={this.state}/>} /> */}
-                
                 <div className="container">
                   <Route exact path="/register" component={ Register } />
                   <Route exact path="/login" component={ Login } />
