@@ -23,7 +23,9 @@ const UserSchema = new Schema({
     FriendRequestedBy: [
         { type: Schema.Types.ObjectId, ref: "users" }
     ],
-    Friends: [],
+    Friends: [
+        { type: Schema.Types.ObjectId, ref: "users" }
+    ],
     date: {
         type: Date,
         default: Date.now

@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const validateRegisterInput = require('../validation/register');
 const validateLoginInput = require('../validation/login');
+const ObjectId = require('mongodb').ObjectId; 
 
 const User = require('../models/User');
 
@@ -111,6 +112,8 @@ router.post('/AddFriend', function (req, res) { // 'req' is the package of two f
             }
         } // TODO now this an object
     )
+    // .populate('FriendRequestedBy')
+    // .then(FriendRequests => res.json(FriendRequests))
     .then(user => {
         if (user) { // user exists, submit request to DB
             return res.end()
@@ -124,24 +127,82 @@ router.post('/AddFriend', function (req, res) { // 'req' is the package of two f
     .catch(err => res.status(422).json(err))
 }) //end router.post
 
+router.post('/DeleteRequest', function(req,res){
+    User.findOneAndUpdate(
+        {
+            _id: ObjectId(req.body.requestor)
+        }, {
+            $pull: {
+                FriendRequestedBy: req.body.acceptor
+            }
+        }
+    )
+    .catch(err => res.status(404).json(err));
+    User.findOneAndUpdate(
+        {
+            _id: ObjectId(req.body.acceptor)
+        }, {
+            $pull: {
+                FriendRequestedBy: req.body.requestor
+            }
+        }
+    )
+    .populate('FriendRequestedBy')
+    .then(FriendRequests => res.json(FriendRequests))
+    .catch(err => res.status(422).json(err))
+})
+
 router.post('/FriendRequests', function(req,res){
-    console.log("FRIEND REQUESTSSSSS",req.body)
-    const id = req.body._id
+    // console.log("FRIEND REQUESTSSSSS",req.body)
+    const id = req.body.id
     User.findById(id)
         .populate('FriendRequestedBy')
         .then(FriendRequests => res.json(FriendRequests))
         .catch(err => res.status(404).json(err));
 })
 
+router.post('/AcceptFriend', function(req,res){
+    console.log(req.body)
+    const requestorId = req.body.requestor;
+    const acceptorId = req.body.acceptor;
+    User.findOneAndUpdate(
+        { _id: ObjectId(requestorId) }, { $push: { Friends: acceptorId } } )
+        .catch(err => res.status(404).json(err));
+    User.findOneAndUpdate(
+        { _id: ObjectId(acceptorId) }, { $push: { Friends: requestorId } } )
+        .populate('Friends')
+    .then(Friends => res.json(Friends))
+    // .then(user => {
+    //     if (user) { // user exists, submit request to DB
+    //         return res.end()
+    //     }
+    //     else { // user not found, inform requestor
+    //         return res.status(404).json({
+    //             reply: 'Email not found'
+    //         });
+    //     } // end else
+    // }) // end then
+    .catch(err => res.status(422).json(err))
+})
+
+router.post('/Friends', function(req,res){
+    const id = req.body.id
+    User.findById(id)
+    .populate('Friends')
+    .then(Friends => res.json(Friends))
+    .catch(err => res.status(404).json(err));
+})
+
 router.get('/me', passport.authenticate('jwt', { session: false }), (req, res) => {
-    console.log("itches." + req.user.id);
-    return res.json(req.user
-    //     {
-    //     id: req.user.id,
-    //     name: req.user.name,
-    //     email: req.user.email,
-    //     FriendRequestedBy: []
-    // }
+    // console.log("itches." + req.user.id);
+    return res.json(
+        {
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+        FriendRequestedBy: req.user.FriendRequestedBy,
+        Friends: req.user.Friends
+    }
 );
 });
 

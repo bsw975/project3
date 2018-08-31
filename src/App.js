@@ -8,7 +8,6 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './setAuthToken';
 import { setCurrentUser, logoutUser } from './actions/authentication';
 import axios from "axios";
-
 import Navbar from './components/Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
@@ -21,7 +20,7 @@ class App extends Component {
     user: null
   }
 
-  componentDidMount () {
+  componentWillMount () {
     if(localStorage.jwtToken) {
       setAuthToken(localStorage.jwtToken);
       const decoded = jwt_decode(localStorage.jwtToken);
@@ -45,8 +44,9 @@ class App extends Component {
         <Router>
             <div>
               <Navbar />
-              {console.log(this.state)}
-                <Route exact path="/" render = {(props) => <Home state={this.state}/>} />
+              {this.state.user==null ? null: <Route exact path="/" render = {(props) => <Home state={this.state}/>} />}
+              {console.log(this.state.user)}
+                {/* <Route exact path="/" render = {(props) => <Home state={this.state}/>} /> */}
                 
                 <div className="container">
                   <Route exact path="/register" component={ Register } />
