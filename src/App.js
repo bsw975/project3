@@ -11,49 +11,41 @@ import axios from "axios";
 import Navbar from './components/Navbar';
 import Register from './components/Register';
 import Login from './components/Login';
-import Home from './components/Home';
+import HomeContainer from './components/HomeContainer';
 import Profile from './components/Profile';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Slideshow from './components/Slideshow';
 
-class App extends Component {
-  state = {
-    user: null
-  }
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-  componentWillMount () {
-    if(localStorage.jwtToken) {
-      setAuthToken(localStorage.jwtToken);
-      const decoded = jwt_decode(localStorage.jwtToken);
+class App extends Component {
+
+  constructor () {
+    super();
+    if(localStorage.getItem("jwtToken")) {
+      setAuthToken(localStorage.getItem("jwtToken"));
+      const decoded = jwt_decode(localStorage.getItem("jwtToken"));
       store.dispatch(setCurrentUser(decoded));
-    
+
       const currentTime = Date.now() / 1000;
       if(decoded.exp < currentTime) {
         store.dispatch(logoutUser());
         window.location.href = '/login'
       }
-
-      // EXAMPLE ONLY of storing user data in state
-      // would have to consider removing from state after logging out
-      axios.get("/api/users/me").then(res => this.setState({ user: res.data }));
     }
   }
 
   render() {
     return (
-      <Provider store = { store }>
+      <Provider store={store}>
         <Router>
             <div>
               <Navbar />
-              {this.state.user==null ? <Route exact path="/" component={Slideshow}/>: <Route exact path="/" render = {(props) => <Home state={this.state}/>} />}
-              {console.log(this.state.user)}
-                {/* <Route exact path="/" render = {(props) => <Home state={this.state}/>} /> */}
-                <div className="container">
-                  <Route exact path="/register" component={ Register } />
-                  <Route exact path="/login" component={ Login } />
-                  <Route exact path="/profile/:id" component={Profile} />
-                </div>
+              <Route exact path="/" component={HomeContainer} />
+              <div className="container">
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/profile/:id" component={Profile} />
+              </div>
             </div>
           </Router>
         </Provider>

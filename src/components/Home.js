@@ -5,6 +5,8 @@ import Request from './Request'
 import { get } from 'http';
 // const User = require('../models/User');
 import Friend from './Friend'
+import store from "../store";
+import Slideshow from './Slideshow';
 
 
 export default class Home extends Component {
@@ -22,8 +24,9 @@ export default class Home extends Component {
     }
     
     handleAddFriend = () => {
+        const {user} = store.getState().auth;
         const friendsToBe = {
-            requestor: this.props.state.user,
+            requestor: user,
             requestee: this.state.email
         }
         axios.post('/api/users/AddFriend', friendsToBe)
@@ -45,10 +48,11 @@ export default class Home extends Component {
     }
 
     handleAcceptFriend = (id) => {
+        const { user } = store.getState().auth;
         const duo =
          {
             requestor: id,
-            acceptor: this.props.state.user.id
+            acceptor: user.id
         }
         axios.post("/api/users/AcceptFriend", duo)
         .then(data=> {
@@ -67,33 +71,33 @@ export default class Home extends Component {
 
     getFriends = (user) => {
         axios.post("/api/users/Friends", user).then(data=> {
-            console.log(data)
             this.setState({friends: data.data.Friends})
         })
     }
 
 
     componentDidMount(){
-        // console.log(this.props.state);
-        this.getRequests(this.props.state.user)
-        this.getFriends(this.props.state.user)
+        const { user } = store.getState().auth;
+        this.getRequests(user)
+        this.getFriends(user)
     }
 
     render() {
+        const {user} = store.getState().auth;
         return (
             <div>
                 <h1>Home Component</h1>
                 <h2>User logged in:</h2>
-                {/* <h1>{JSON.stringify(this.props.state.user)}</h1> */}
-                <h3>{console.log(this.props.state) }</h3>
-                <h3>{JSON.stringify(this.props.state.user)}</h3>
+                {/* <h1>{JSON.stringify(user)}</h1> */}
+                <h3>{console.log(store.getState().auth.user) }</h3>
+                <h3>{JSON.stringify(user)}</h3>
                 <h4><a href="AddFriend">Add friends</a></h4>
                     <input onChange={this.handleInput} value={this.state.email}placeholder="Friend's email" name="email"/>
                     <button onClick={this.handleAddFriend}>Add Friend</button>
                 {/* <h5><a href="FriendRequests">Accept friend requests</a></h5> */}
                 <h5>Pending Friend Requests:</h5>
-                {/* <button onClick={() => this.getRequests(this.props.state.user)}>Click to see friend requests</button> */}
-                {/* {this.props.state.user.FriendRequestedBy} */}
+                {/* <button onClick={() => this.getRequests(user)}>Click to see friend requests</button> */}
+                {/* {user.FriendRequestedBy} */}
                 {this.state.friendRequests.length>0 ? this.state.friendRequests.map((request,index) => (
                     <Request
                     key={index}
@@ -123,7 +127,6 @@ export default class Home extends Component {
                     name={friend.name}
                     />
                 ))}
-
             </div>
         );
     }
