@@ -4,14 +4,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const passport = require('passport');
-const config = require('./db');
+// const config = require('./db');
 
 // this doesn't make sense.
 // users is all of the routes from user.js
 
 const users = require('./routes/user'); 
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/auth";
 
-mongoose.connect(config.DB, { useNewUrlParser: true })
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
     .then(    () => {console.log('Database is connected') },
     err => { console.log('Can not connect to the database'+ err)}
 );
