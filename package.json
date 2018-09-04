@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "if-env NODE_ENV=production && npm start:prod || npm start:dev",
+    "start": "node server.js",
+    "_NOTstart": "if-env NODE_ENV=production && npm start:prod || npm start:dev",
     "start:prod": "node server.js",
     "start:dev": "concurrently \"nodemon --ignore 'frontend/*'\" \"npm frontend\"",
     "client": "cd frontend && npm start",
