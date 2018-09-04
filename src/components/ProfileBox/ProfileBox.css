@@ -1,0 +1,49 @@
+#profileBox {
+    margin-left: 40px;
+    margin-top: 100px;
+    margin-bottom: 15px;
+    border: solid;
+    border-width: 2px;
+    border-color: rgb(3, 3, 91);
+    background-color: white;
+    box-shadow: 2px 2px 2px 2px gray;
+    text-align: center;
+    display: block;
+    /* height: 750px; */
+    width: 100%;
+    height: auto;
+}
+
+#profilePic {
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+#name {
+    text-align: center;
+}
+
+#schoolLogo {
+    width: 10%;
+    height: auto;
+}
+
+#friendLogo {
+    width: 8%;
+    height: auto;
+}
+
+#networkLogo {
+    width: 17%;
+    height: auto;
+}
+
+
+#locationLogo {
+    width: 5%;
+    height: auto;
+}
+
+#quote {
+    padding: 10px;
+}
