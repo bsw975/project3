@@ -6,10 +6,10 @@
   "scripts": {
     "start": "if-env NODE_ENV=production && npm start:prod || npm start:dev",
     "start:prod": "node server.js",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm client\"",
-    "client": "cd client && npm start",
-    "install": "cd client && npm install",
-    "build": "cd client && npm build",
+    "start:dev": "concurrently \"nodemon --ignore 'frontend/*'\" \"npm frontend\"",
+    "client": "cd frontend && npm start",
+    "install": "cd frontend && npm install",
+    "build": "cd frontend && npm build",
     "heroku-postbuild": "npm build"
   },
   "keywords": [],
