@@ -11,11 +11,11 @@ const config = require('./db');
 
 const users = require('./routes/user'); 
 
-mongoose.connect(config.DB, { useNewUrlParser: true }).then(
-    () => {console.log('Database is connected') },
+mongoose.connect(config.DB, { useNewUrlParser: true })
+    .then(    () => {console.log('Database is connected') },
     err => { console.log('Can not connect to the database'+ err)}
 );
-
+console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
 }
