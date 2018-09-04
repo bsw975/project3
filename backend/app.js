@@ -6,6 +6,9 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const config = require('./db');
 
+// this doesn't make sense.
+// users is all of the routes from user.js
+
 const users = require('./routes/user'); 
 
 mongoose.connect(config.DB, { useNewUrlParser: true }).then(
@@ -20,6 +23,8 @@ require('./passport')(passport);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// localhost:3000/api/users is 
+// the PREFIX to EVERYTHING in router
 app.use('/api/users', users);
 
 app.get('/', function(req, res) {

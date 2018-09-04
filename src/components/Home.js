@@ -34,7 +34,6 @@ export default class Home extends Component {
 
         // addFriend(friendsToBe) // TODO: understand why this is NOT this. props. addFriend
     }
-
     
     getRequests = (user) => {
         // const anything = this.props
@@ -65,13 +64,33 @@ export default class Home extends Component {
         // .then(console.log)
     }
 
+    // handleBlogPost = (id) => {
+    //     const postObject =
+    //      {
+    //         id: id,
+    //         acceptor: this.props.state.user.id
+    //     }
+    //     axios.post("/api/users/BlogPosts", duo)
+    //     .then(data=> {
+    //         this.setState({friends: data.data.Friends})
+    //         return axios.post('/api/users/DeleteRequest',duo)
+    //     }).then(data=> {
+    //         this.setState({friendRequests: data.data.FriendRequestedBy});
+    //     })
+        
+    //     // .then(data=> {
+    //     //     console.log(data)
+    //     //     this.setState({friends: data.data.Friends})
+    //     // })
+    //     // .then(console.log)
+    // }
+
     getFriends = (user) => {
         axios.post("/api/users/Friends", user).then(data=> {
             console.log(data)
             this.setState({friends: data.data.Friends})
         })
     }
-
 
     componentDidMount(){
         // console.log(this.props.state);
