@@ -16,6 +16,10 @@ mongoose.connect(config.DB, { useNewUrlParser: true }).then(
     err => { console.log('Can not connect to the database'+ err)}
 );
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+}
+
 const app = express();
 app.use(passport.initialize());
 require('./passport')(passport);
