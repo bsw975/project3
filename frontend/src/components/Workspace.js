@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axio from 'axios';
 
 
-import S3FileUpload from 'react-s3';
+// import S3FileUpload from 'react-s3';
 
 const config = {
     bucketName: 'kidsworkspacedb',
@@ -19,10 +19,10 @@ class Workspace extends Component {
 
     upload = e =>{
         console.log(e.target.files[0])
-        S3FileUpload .upload(e.target.files[0], config)
-            .then(data => {
-                console.log(data.location);
-                this.setState({imgSrc:data.location});})
+        // S3FileUpload .upload(e.target.files[0], config)
+        //     .then(data => {
+        //         console.log(data.location);
+        //         this.setState({imgSrc:data.location});})
                 //data is a json object looks like the following:
                 /**
         * {
