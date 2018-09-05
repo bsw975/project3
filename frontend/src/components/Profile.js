@@ -14,11 +14,11 @@ class Profile extends Component {
     componentDidMount(){
         //The following function comes from folder utils' API.js.
         //I seperate it cuz I believe we need to load kids info on serveral differents pages
-    
+    console.log("JuliaFun", this.props)
         API.loadUserInfo(this.props.match.params.id)
         .then(res => 
             this.setState({ user: res.data }))
-      .catch(err => console.log(err));
+        .catch(err => console.log(err));
     };
     
     handlePageChange = page => {

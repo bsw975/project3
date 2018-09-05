@@ -8,6 +8,6 @@ export default {
     },
 
     loadUsers: function(){
-        return axio.get("api/users")
+        return axio.get("/api/users")
     }
 }

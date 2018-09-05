@@ -46,13 +46,13 @@ class App extends Component {
         <Router>
             <div>
               <Navbar />
-              {this.state.user==null ? <Route exact path="/" component={Slideshow}/>: <Route exact path="/" render = {(props) => <Home state={this.state}/>} />}
+              {this.state.user==null ? <Route exact path="/" component={ Slideshow }/>: <Route exact path="/" render = {(props) => <Home state={this.state}/>} />}
               {console.log(this.state.user)}
                 {/* <Route exact path="/" render = {(props) => <Home state={this.state}/>} /> */}
                 <div className="container">
                   <Route exact path="/register" component={ Register } />
                   <Route exact path="/login" component={ Login } />
-                  <Route exact path="/profile/:id" component={Profile} />
+                  <Route exact path="/profile/:id" component={ Profile } />
                 </div>
             </div>
           </Router>
