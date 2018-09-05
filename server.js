@@ -19,7 +19,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
 const app = express();
 console.log(process.env.NODE_ENV)
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'));
+    app.use(express.static('frontend/build'));
 }
 
 app.use(passport.initialize());
@@ -33,9 +33,9 @@ app.use(bodyParser.json());
 
 app.use('/api/users', users);
 
-app.get('/', function(req, res) {
-    res.send('hello');
-});
+// app.get('/', function(req, res) {
+//     res.send('hello');
+// });
 
 const PORT = process.env.PORT || 5000;
 

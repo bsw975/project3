@@ -10,8 +10,8 @@
     "start:dev": "concurrently \"nodemon --ignore 'frontend/*'\" \"npm frontend\"",
     "client": "cd frontend && npm start",
     "install": "cd frontend && npm install",
-    "build": "cd frontend && npm build",
-    "heroku-postbuild": "npm build"
+    "build": "cd frontend && npm run build",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
