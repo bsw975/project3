@@ -5,7 +5,7 @@ import Request from './Request'
 import { get } from 'http';
 // const User = require('../models/User');
 import Friend from './Friend'
-
+import store from "../store";
 
 export default class Home extends Component {
     state={
@@ -106,6 +106,7 @@ export default class Home extends Component {
                 {/* <h1>{JSON.stringify(this.props.state.user)}</h1> */}
                 <h3>{console.log(this.props.state) }</h3>
                 <h3>{JSON.stringify(this.props.state.user)}</h3>
+                <h4><a href={`/profile/${store.getState().auth.user.id}`}>Go to your profile</a></h4>
                 <h4><a href="AddFriend">Add friends</a></h4>
                     <input onChange={this.handleInput} value={this.state.email}placeholder="Friend's email" name="email"/>
                     <button onClick={this.handleAddFriend}>Add Friend</button>
