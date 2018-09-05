@@ -7,6 +7,7 @@ const passport = require('passport');
 const validateRegisterInput = require('../validation/register');
 const validateLoginInput = require('../validation/login');
 const ObjectId = require('mongodb').ObjectId;
+const fs = require('fs')
 
 const User = require('../models/User');
 // separate routes for HTML, 
@@ -219,5 +220,38 @@ router.get('/me', passport.authenticate('jwt', { session: false }), (req, res) =
 
 router.get('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
 });
+
+router.post("/images", (req,res) => {
+    // console.log(req.body.image)
+    const image = req.body.image.split(',')[1]
+    const type = req.body.type.split('/')[1]
+    fs.writeFile('./frontend/public/images/'+req.body.id+'.'+type, image, "base64" ,(err) => {
+      if (err) throw err;
+      console.log('The file has been saved!');
+    });
+    User
+    .findOneAndUpdate({ _id: req.body.id }, 
+      {
+        $set : {
+            path : "/images/"+req.body.id+"."+type
+            // name: "brett"
+           }
+      }
+    )
+    .then(dbModel => res.json(dbModel))
+    .catch(err => res.status(422).json(err));
+  
+  })
+  
+router.get("/upload/:id", (req, res) => {
+    User
+    // .find({name: "tiger woods"})
+      // .find({"_id": ObjectId(req.params.id)})
+      // .find(ObjectId(req.params.id))
+      // .findById(req.params.id)
+      .findById(req.params.id)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  })
 
 module.exports = router;

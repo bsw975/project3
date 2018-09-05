@@ -29,7 +29,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // localhost:3000/api/users is 
-// the PREFIX to EVERYTHING in router
+// the PREFIX to EVERYTHING in router 
+
 app.use('/api/users', users);
 
 // app.get('/', function(req, res) {

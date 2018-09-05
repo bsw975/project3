@@ -16,6 +16,13 @@ const SubpagesLinks = props => (
         Workspace
       </a>
     </li>
+    <li>
+      <a
+        onClick={() => props.handlePageChange("Profile Picture")}
+      >
+        Profile Picture
+      </a>
+    </li>
 
 </ul>
 );
