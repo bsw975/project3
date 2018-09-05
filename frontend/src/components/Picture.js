@@ -22,7 +22,6 @@ class Picture extends Component {
         )
         .then(res => {console.log(res);
              this.setState({profpic: res.data.path})
-            //  this.props.setPicture(res.data.path)
             })
         }
         reader.readAsDataURL(this.state.file) 
