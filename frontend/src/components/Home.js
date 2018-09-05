@@ -4,7 +4,8 @@ import axios from 'axios';
 import Request from './Request'
 import { get } from 'http';
 // const User = require('../models/User');
-import Friend from './Friend'
+import Friend from './Friend';
+import "./Home.css";
 
 
 export default class Home extends Component {
@@ -101,16 +102,20 @@ export default class Home extends Component {
     render() {
         return (
             <div>
-                <h1>Home Component</h1>
-                <h2>User logged in:</h2>
-                {/* <h1>{JSON.stringify(this.props.state.user)}</h1> */}
-                <h3>{console.log(this.props.state) }</h3>
-                <h3>{JSON.stringify(this.props.state.user)}</h3>
+                <br />
+                <center><h1>Welcome back {this.props.state.user.name}!</h1></center>
+                <div className='row'>
+                <div className='col-lg-12'>
+                <div className='row'>
+                <div className='col-lg-6'>
+                <img src='https://www.pngarts.com/files/2/Positive-Quotes-PNG-Background-Image.png' />
+                </div>
+                <div id='friends' className='col-log-6'>
                 <h4><a href="AddFriend">Add friends</a></h4>
                     <input onChange={this.handleInput} value={this.state.email}placeholder="Friend's email" name="email"/>
                     <button onClick={this.handleAddFriend}>Add Friend</button>
                 {/* <h5><a href="FriendRequests">Accept friend requests</a></h5> */}
-                <h5>Pending Friend Requests:</h5>
+                <h3>Pending Friend Requests:</h3>
                 {/* <button onClick={() => this.getRequests(this.props.state.user)}>Click to see friend requests</button> */}
                 {/* {this.props.state.user.FriendRequestedBy} */}
                 {this.state.friendRequests.length>0 ? this.state.friendRequests.map((request,index) => (
@@ -129,7 +134,7 @@ export default class Home extends Component {
                     name={request.name}
                     />
                 ))} */}
-                <h5>My Friends</h5>
+                <h3>My Friends:</h3>
                 {/* {this.state.friends.length>0 ? this.state.friends.map((friend,index) => (
                     <Friend
                     key={index}
@@ -142,6 +147,12 @@ export default class Home extends Component {
                     name={friend.name}
                     />
                 ))}
+                </div>
+                </div>
+                </div>
+                </div>
+                
+                
 
             </div>
         );
