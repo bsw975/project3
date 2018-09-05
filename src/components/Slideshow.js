@@ -4,9 +4,11 @@ import { Slide } from 'react-slideshow-image';
 
 
 const slideImages = [
- '/images/timg2.png',
-  '/images/timg4.png',
-  '/images/timg5.png'
+ '/images/img1.png',
+  '/images/img2.png',
+  '/images/img3.png',
+  '/images/img4.png',
+  '/images/img5.png'
 ];
 
 const properties = {
@@ -34,6 +36,14 @@ const Slideshow = () => {
           
           <div className="each-slide">
             <img src={slideImages[2]} alt="" />
+          </div>
+
+          <div className="each-slide">
+            <img src={slideImages[3]} alt="" />
+          </div>
+
+          <div className="each-slide">
+            <img src={slideImages[4]} alt="" />
           </div>
         
       </Slide>
