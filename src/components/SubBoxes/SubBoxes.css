@@ -1,0 +1,59 @@
+hr {
+    height: 0px;
+    border: none;
+    border-top: 1px solid black;
+}
+
+#subBox {
+    margin-left: 15px;
+    margin-top: 100px;
+    margin-bottom: 12px;
+    border: solid;
+    border-width: 1px;
+    border-radius: 25px;
+    border-width: 2px;
+    border-color: rgb(2, 2, 74);
+    background-color: white;
+    box-shadow: 4px 4px gray;
+    width: 975px;
+}
+
+#subBox > #achievements > h2 {
+    text-align: center;
+}
+
+#subBoxTwo {
+    margin-top: 15px;
+    margin-left: 15px;
+    width: 975px;
+    
+}
+
+#subBoxThree {
+    border: solid;
+    border-width: 1px;
+    margin-left: 25px;
+    border-radius: 25px;
+    border-width: 2px;
+    border-color: rgb(2, 2, 74);
+    background-color: white;
+    box-shadow: 4px 4px gray;
+    text-align: center;
+    width: 100px;
+   
+}
+
+#subBoxFour {
+    border: solid;
+    border-width: 1px;
+    margin-left: 25px;
+    margin-top: 8px;
+    border-radius: 25px;
+    border-width: 2px;
+    border-color: rgb(2, 2, 74);
+    background-color: white;
+    box-shadow: 4px 4px gray;
+    text-align: center;
+    
+}
+
