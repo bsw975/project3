@@ -9,9 +9,9 @@
     box-shadow: 2px 2px 2px 2px gray;
     text-align: center;
     display: block;
-    /* height: 750px; */
+    height: 750px;
     width: 100%;
-    height: auto;
+    /* max-height: 700px; */
 }
 
 #profilePic {

@@ -22,10 +22,13 @@ export default class Home extends Component {
     }
     
     handleAddFriend = () => {
+        const {user} = store.getState().auth;
         const friendsToBe = {
-            requestor: this.props.state.user,
+            requestor: user,
             requestee: this.state.email
         }
+        this.refs.emailInput.value = '';
+
         axios.post('/api/users/AddFriend', friendsToBe)
         // .then(data => {
         //     this.setState({friendRequests: data.data.FriendRequestedBy});console.log(data);console.log(this.state.friendRequests)
@@ -44,10 +47,11 @@ export default class Home extends Component {
     }
 
     handleAcceptFriend = (id) => {
+        const { user } = store.getState().auth;
         const duo =
          {
             requestor: id,
-            acceptor: this.props.state.user.id
+            acceptor: user.id
         }
         axios.post("/api/users/AcceptFriend", duo)
         .then(data=> {
@@ -62,6 +66,19 @@ export default class Home extends Component {
         //     this.setState({friends: data.data.Friends})
         // })
         // .then(console.log)
+    }
+
+    handleRejectFriend = (id) => {
+        const { user } = store.getState().auth;
+        const duo =
+         {
+            requestor: id,
+            rejector: user.id
+        }
+        axios.post("/api/users/DeleteFriendRequest", duo)
+        .then(data=> {
+            this.setState({friendRequests: data.data.FriendRequestedBy})
+        })
     }
 
     // handleBlogPost = (id) => {
@@ -87,40 +104,41 @@ export default class Home extends Component {
 
     getFriends = (user) => {
         axios.post("/api/users/Friends", user).then(data=> {
-            console.log(data)
             this.setState({friends: data.data.Friends})
         })
     }
 
     componentDidMount(){
-        // console.log(this.props.state);
-        this.getRequests(this.props.state.user)
-        this.getFriends(this.props.state.user)
+        const { user } = store.getState().auth;
+        this.getRequests(user)
+        this.getFriends(user)
     }
 
     render() {
+        const {user} = store.getState().auth;
         return (
             <div>
                 <h1>Home Component</h1>
                 <h2>User logged in:</h2>
                 {/* <h1>{JSON.stringify(this.props.state.user)}</h1> */}
-                <h3>{console.log(this.props.state) }</h3>
-                <h3>{JSON.stringify(this.props.state.user)}</h3>
+                <h3>{JSON.stringify(store.getState().auth.user)}</h3>
+                <h2>Welcome, {store.getState().auth.user.name}!</h2>
                 <h4><a href={`/profile/${store.getState().auth.user.id}`}>Go to your profile</a></h4>
-                <h4><a href="AddFriend">Add friends</a></h4>
-                    <input onChange={this.handleInput} value={this.state.email}placeholder="Friend's email" name="email"/>
+                    <input onChange={this.handleInput} value={this.state.email}placeholder="Friend's email" name="email" ref="emailInput"/>
                     <button onClick={this.handleAddFriend}>Add Friend</button>
                 {/* <h5><a href="FriendRequests">Accept friend requests</a></h5> */}
                 <h5>Pending Friend Requests:</h5>
-                {/* <button onClick={() => this.getRequests(this.props.state.user)}>Click to see friend requests</button> */}
-                {/* {this.props.state.user.FriendRequestedBy} */}
+                {/* <button onClick={() => this.getRequests(user)}>Click to see friend requests</button> */}
+                {/* {user.FriendRequestedBy} */}
                 {this.state.friendRequests.length>0 ? this.state.friendRequests.map((request,index) => (
                     <Request
                     key={index}
                     email={request.email}
                     name={request.name}
                     handleAcceptFriend={this.handleAcceptFriend}
+                    handleRejectFriend={this.handleRejectFriend}
                     id={request._id}
+                    path={request.path}
                     />
                 )): null}
                 {/* {this.state.friendRequests.map((request,index) => (
@@ -141,9 +159,9 @@ export default class Home extends Component {
                     <Friend
                     key={index}
                     name={friend.name}
+                    path={friend.path}
                     />
                 ))}
-
             </div>
         );
     }

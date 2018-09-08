@@ -155,6 +155,21 @@ router.post('/DeleteRequest', function (req, res) {
         .catch(err => res.status(422).json(err))
 })
 
+router.post('/DeleteFriendRequest', function (req, res) {
+    User.findOneAndUpdate(
+        {
+            _id: ObjectId(req.body.rejector)
+        }, {
+            $pull: {
+                FriendRequestedBy: req.body.requestor
+            }
+        }
+    )
+        .populate('FriendRequestedBy')
+        .then(FriendRequests => res.json(FriendRequests))
+        .catch(err => res.status(422).json(err))
+})
+
 router.post('/FriendRequests', function (req, res) { // ONLY shows active friend requests for the logged-in users
     const id = req.body.id
     User.findById(id)
@@ -198,6 +213,14 @@ router.post('/AcceptFriend', function (req, res) {
 })
 
 router.post('/Friends', function (req, res) {
+    const id = req.body.id
+    User.findById(id)
+        .populate('Friends')
+        .then(Friends => res.json(Friends))
+        .catch(err => res.status(404).json(err));
+})
+
+router.post('/ProfileFriends', function (req, res) {
     const id = req.body.id
     User.findById(id)
         .populate('Friends')
